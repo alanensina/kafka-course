@@ -35,3 +35,25 @@ Creating a topic, producing and consuming a message:
 - Get in /bin on a new Terminal
 - Instantiate a Kafka Consumer (without key): ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic --from-beginning
 - All the messages that you sent on Producer will be consumed and shown on this terminal
+
+Messages with keys:
+- When a producer sends a message with a key, the Partitioner will orient the message to a Partition that defined a key, it's usefull if you want to define which Partition to store and organize your messages
+- Get in /bin on a new Terminal
+- Create a topic: ./kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 4 --topic test-topic
+- Set the key separator: ./kafka-console-producer.sh --broker-list localhost:9092 --topic test-topic --property "key.separator=-" --property "parse.key=true"
+- Note the params key.separator that defines a separator used to split the message and the key, so the messages must be sent like this:
+    A-Alan
+    A-Apple
+    A-Aerosmith
+- Get in /bin on a new Terminal
+- Instantiate a Kafka Consumer with the key separator that matches with Producer: ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic --from-beginning -property "key.separator= - " --property "print.key=true"
+- All the messages will be shown with the key, if you don't want to see the key, set the print.key parameter to false
+
+Consumer groups:
+- Consumer groups are used for scalable message consumption
+- Each different application will have a unique consumer group
+- Who manages the consumer group?
+    Kafka Broker manages the consumer-groups and acts as a Group Co-ordinator
+- To list consumer-groups, get in /bin and send the command: ./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
+- Everytime that you Instantiate a new consumer, a new id will be generated
+- To Instantiate a consumer with a group, get in /bin and send a command: ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic --group <group-name>
