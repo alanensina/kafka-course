@@ -57,3 +57,24 @@ Consumer groups:
 - To list consumer-groups, get in /bin and send the command: ./kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list
 - Everytime that you Instantiate a new consumer, a new id will be generated
 - To Instantiate a consumer with a group, get in /bin and send a command: ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic --group <group-name>
+
+Commit log and Retention Policy:
+- You can find all the logs into the folder of the kafka, but there's a hidden folder called /tmp that is designed to store logs from the producers and consumers and you can set the retention on the server.properties. The default retention is 168 hours (7 days)
+- To read the logs into the terminal send the command: ./kafka-run-class.sh kafka.tools.DumpLogSegments --deep-iteration --files <path+log-name>
+
+Kafka as a Distributed System:
+- Client requests are distributed between brokers
+- Easy to scale by adding more brokers based on the need
+- Handles data loss using replication
+
+Kafka Brokers:
+- To set up multiple brokers you need to configure new server.properties adding the following code:
+    broker.id=<unique-broker-d>
+    listeners=PLAINTEXT://localhost:<unique-port>
+    log.dirs=/tmp/<unique-kafka-folder>
+    auto.create.topics.enable=false
+- To start the new broker use the following commando: ./kafka-server-start.sh ../config/<server properties name that you created, e.g: server-1.properties>
+- Create the topics following the amount of brokers: ./kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 3 --partitions 3 --topic test-topic-replicated
+- Instantiate the producer: ./kafka-console-producer.sh --broker-list localhost:9092 --topic test-topic-replicated
+- Instantiate the consumer: ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic-replicated --from-beginning
+- Send messages and then check the logs in the /tmp
