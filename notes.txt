@@ -78,3 +78,17 @@ Kafka Brokers:
 - Instantiate the producer: ./kafka-console-producer.sh --broker-list localhost:9092 --topic test-topic-replicated
 - Instantiate the consumer: ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic-replicated --from-beginning
 - Send messages and then check the logs in the /tmp
+
+How Kafka distributes the client requests:
+- Partition leaders are assigned during the topic creation
+- clients will only invoke leader of the partition to produce and consume data
+- Load is evenly distributed between brokers
+
+How Kafka handles Data loss:
+- Using replication
+- In-sync replica (ISR)
+    - Represents the number of replica in sync with each other in the cluster
+    - Includes both leader and follower replica
+    - Recommended value is always > 1
+    - Ideal value is ISR == Replication Factor
+    - Can be controlled by min.insync.replicas property (it can be set at the broker or topic level)
