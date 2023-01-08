@@ -1,6 +1,6 @@
-package esn.kafkacourse.controller;
+package controller;
 
-import esn.kafkacourse.domain.LibraryEvent;
+import domain.LibraryEvent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LibraryEventsController {
 
-    @PostMapping("/v1/libraryevent")
-    public ResponseEntity<LibraryEvent> postLibraryEvent(@RequestBody LibraryEvent libraryEvent){
-        // TODO: Invoke the kafka producer
-        return ResponseEntity.status(HttpStatus.CREATED).body(libraryEvent);
+    @PostMapping("/v1/libraryEvent")
+    public ResponseEntity<LibraryEvent> postLibraryEvent(@RequestBody LibraryEvent event){
+        // TODO: Invoke Kafka producer
+        return ResponseEntity.status(HttpStatus.CREATED).body(event);
     }
+
+
 }

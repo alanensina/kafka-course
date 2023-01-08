@@ -1,4 +1,4 @@
-package esn.kafkacourse;
+package library.events.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package esn.kafkacourse.domain;
+package domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class LibraryEvent {
-    private Integer libraryEventId;
-    private Book book;
+public class Book {
+
+    private Integer id;
+    private String name;
+    private String author;
 }
